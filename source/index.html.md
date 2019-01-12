@@ -7,21 +7,20 @@ language_tabs: # must be one of https://git.io/vQNgJ
 toc_footers:
 
 includes:
-  
 
 search: true
 ---
 
 # Introduction
 
-Welcome to the Scalefog api
+Welcome to the Scalefog api Documentation
 
 # Account
 
 ## Get Token
 
 ```curl
-curl -d "username=yourusername&password=yourpassword" -X POST https://api.scalefog.com/account/getToken
+curl -d "username=yourusername&password=yourpassword" -X POST https://api.scalefog.com/user/getToken
 ```
 
 > The above command returns JSON structured like this:
@@ -30,12 +29,12 @@ curl -d "username=yourusername&password=yourpassword" -X POST https://api.scalef
 [
   {
     "success": "true",
-    "token": "6e8c5284926716591f9efb0935db8298"
+    "accesstoken": "6e8c5284926716591f9efb0935db8298"
   }
 ]
 ```
 
-POST https://api.scalefog.com/account/getToken`
+POST https://api.scalefog.com/user/getToken`
 
 ### Query Parameters
 
@@ -47,12 +46,12 @@ POST https://api.scalefog.com/account/getToken`
 ## Register New User
 
 ```curl
-curl -d "username=yourusername&email=emailaddress&password=yourpassword" -X POST https://api.scalefog.com/account/register
+curl -d "username=yourusername&email=emailaddress&password=yourpassword" -X POST https://api.scalefog.com/user/register
 ```
 
 Register new user
 
-POST https://api.scalefog.com/account/register`
+POST https://api.scalefog.com/user/register`
 
 ### Query Parameters
 
@@ -65,18 +64,28 @@ POST https://api.scalefog.com/account/register`
 ## Add SSH key
 
 ```curl
-curl -H "Authorization: Bearer <Access Token> -d "sshkey=<key>" -X POST https://api.scalefog.com/account/addkey
+curl -H "Authorization: Bearer <Access Token> -d "sshkey=<key>" -X POST https://api.scalefog.com/user/addkey
 ```
 
 Add SSH key to your account
 
-POST https://api.scalefog.com/account/addkey
+POST https://api.scalefog.com/user/addkey
 
 ### Query Parameters
 
 | Parameter | Required | Description |
 | --------- | -------- | ----------- |
 | sshkey    | Yes      | RSA key     |
+
+## Delete SSH key
+
+```curl
+curl -H "Authorization: Bearer <Access Token>" -d "token=<token>" -X "DELETE" https://api.scalefog.com/user/key
+```
+
+Delete RSA key
+
+DELETE https://api.scalefog.com/user/key
 
 # Instances
 
@@ -93,7 +102,7 @@ GET https://api.scalefog.com/instances
 ## Create Instance
 
 ```curl
-curl -H "Authorization: Bearer <Access Token> -d "appname=yourappname&region=1" -X POST https://api.scalefog.com/instances/create
+curl -H "Authorization: Bearer <Access Token> -d "appname=yourappname&region=eu" -X POST https://api.scalefog.com/instances/create
 ```
 
 Create a new Instance
@@ -110,47 +119,17 @@ POST https://api.scalefog.com/instances/create
 ## Delete Instance
 
 ```curl
-curl -H "Authorization: Bearer <Access Token>" https://api.scalefog.com/instances/delete/:appname
+curl -H "Authorization: Bearer <Access Token>" -X "DELETE" https://api.scalefog.com/instances/delete/:appname
 ```
 
 Delete instance
 
-GET https://api.scalefog.com/instances/delete/:appname
-
-## Start Instance
-
-```curl
-curl -H "Authorization: Bearer <Access Token>" https://api.scalefog.com/instances/start/:appname
-```
-
-Start instance
-
-GET https://api.scalefog.com/instances/start/:appname
-
-## Restart Instance
-
-```curl
-curl -H "Authorization: Bearer <Access Token>" https://api.scalefog.com/instances/restart/:appname
-```
-
-Restart instance
-
-GET https://api.scalefog.com/instances/restart/:appname
-
-## Stop Instance
-
-```curl
-curl -H "Authorization: Bearer <Access Token>" https://api.scalefog.com/instances/stop/:appname
-```
-
-Stop instance
-
-GET https://api.scalefog.com/instances/stop/:appname
+DELETE https://api.scalefog.com/instances/:appname
 
 ## List Regions
 
 ```curl
-curl https://api.scalefog.com/instances/regions
+curl https://api.scalefog.com//regions
 ```
 
 > The above command returns JSON structured like this:
@@ -158,11 +137,11 @@ curl https://api.scalefog.com/instances/regions
 ```json
 [
   {
-    "1": "Europe"
+    "name": "Eu"
   }
 ]
 ```
 
 Get a list of all available regions.
 
-GET https://api.scalefog.com/instances/regions
+GET https://api.scalefog.com/regions
